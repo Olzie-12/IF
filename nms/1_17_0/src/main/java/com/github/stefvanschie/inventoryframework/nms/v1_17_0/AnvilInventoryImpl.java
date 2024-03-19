@@ -24,7 +24,6 @@ import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_17_R1.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.Contract;
@@ -57,7 +56,9 @@ public class AnvilInventoryImpl extends AnvilInventory {
 
         ServerPlayer serverPlayer = getServerPlayer(player);
 
-        CraftEventFactory.handleInventoryCloseEvent(serverPlayer, InventoryCloseEvent.Reason.OPEN_NEW);
+        //ignore deprecation: superseding method is only available on Paper
+        //noinspection deprecation
+        CraftEventFactory.handleInventoryCloseEvent(serverPlayer);
 
         serverPlayer.containerMenu = serverPlayer.inventoryMenu;
 
@@ -264,7 +265,13 @@ public class AnvilInventoryImpl extends AnvilInventory {
 
         @Override
         public void setItemName(@Nullable String name) {
-            AnvilInventoryImpl.super.text = name == null ? "" : name;
+            name = name == null ? "" : name;
+
+            /* Only update if the name is actually different. This may be called even if the name is not different,
+               particularly when putting an item in the first slot. */
+            if (!name.equals(AnvilInventoryImpl.super.observableText.get())) {
+                AnvilInventoryImpl.super.observableText.set(name);
+            }
 
             //the client predicts the output result, so we broadcast the state again to override it
             ContainerSynchronizer synchronizer;

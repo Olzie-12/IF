@@ -5,6 +5,9 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+import java.util.EnumSet;
+
 /**
  * The different supported NMS versions
  *
@@ -108,7 +111,84 @@ public enum Version {
      *
      * @since 0.10.8
      */
-    V1_19_3;
+    V1_19_3,
+
+    /**
+     * Version 1.19.4
+     *
+     * @since 0.10.9
+     */
+    V1_19_4,
+
+    /**
+     * Version 1.20.0
+     *
+     * @since 0.10.14
+     */
+    V1_20_0,
+
+    /**
+     * Version 1.20.1
+     *
+     * @since 0.10.14
+     */
+    V1_20_1,
+
+    /**
+     * Version 1.20.2
+     *
+     * @since 0.10.12
+     */
+    V1_20_2,
+
+    /**
+     * Version 1.20.3 - 1.20.4
+     *
+     * @since 0.10.13
+     */
+    V1_20_3_4;
+
+    /**
+     * A collection of versions on which modern smithing tables are available.
+     */
+    private static final Collection<Version> MODERN_SMITHING_TABLE_VERSIONS = EnumSet.of(
+            V1_19_4,
+            V1_20_0, V1_20_1, V1_20_2, V1_20_3_4
+    );
+
+    /**
+     * A collection of versions on which legacy smithing tables ae available.
+     */
+    @NotNull
+    private static final Collection<@NotNull Version> LEGACY_SMITHING_TABLE_VERSIONS = EnumSet.of(
+            V1_14,
+            V1_15,
+            V1_16_1, V1_16_2_3, V1_16_4_5,
+            V1_17_0, V1_17_1,
+            V1_18_0, V1_18_1, V1_18_2,
+            V1_19_0, V1_19_1, V1_19_2, V1_19_3, V1_19_4
+    );
+
+    /**
+     * Checks whether modern smithing tables exist on this version. Returns true if they do, otherwise false.
+     *
+     * @return true if modern smithing tables are available
+     * @since 0.10.10
+     */
+    boolean existsModernSmithingTable() {
+        return MODERN_SMITHING_TABLE_VERSIONS.contains(this);
+    }
+
+    /**
+     * Checks whether legacy smithing tables exist on this version. Returns true if they do, otherwise false.
+     *
+     * @return true if legacy smithing tables are available
+     * @since 0.10.10
+     */
+    @Contract(pure = true)
+    boolean existsLegacySmithingTable() {
+        return LEGACY_SMITHING_TABLE_VERSIONS.contains(this);
+    }
 
     /**
      * Gets the version currently being used. If the used version is not supported, an
@@ -159,6 +239,17 @@ public enum Version {
                 return V1_19_2;
             case "1.19.3":
                 return V1_19_3;
+            case "1.19.4":
+                return V1_19_4;
+            case "1.20":
+                return V1_20_0;
+            case "1.20.1":
+                return V1_20_1;
+            case "1.20.2":
+                return V1_20_2;
+            case "1.20.3":
+            case "1.20.4":
+                return V1_20_3_4;
             default:
                 throw new UnsupportedVersionException("The server version provided is not supported");
         }

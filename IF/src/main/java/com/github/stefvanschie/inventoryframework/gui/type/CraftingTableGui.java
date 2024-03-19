@@ -120,9 +120,6 @@ public class CraftingTableGui extends NamedGui implements InventoryBased {
             getPlayerInventoryComponent().placeItems(humanEntity.getInventory(), 0);
         }
 
-        //also let Bukkit know that we opened an inventory
-        humanEntity.openInventory(getInventory());
-
         humanEntity.openInventory(getInventory());
     }
 
@@ -314,7 +311,7 @@ public class CraftingTableGui extends NamedGui implements InventoryBased {
                     throw new XMLLoadException("Unknown component name");
             }
 
-            component.load(instance, componentElement);
+            component.load(instance, componentElement, plugin);
         }
 
         return craftingTableGui;

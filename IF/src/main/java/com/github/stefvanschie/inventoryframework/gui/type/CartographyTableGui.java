@@ -155,7 +155,7 @@ public class CartographyTableGui extends NamedGui implements InventoryBased {
     @Contract(pure = true)
     @Override
     public CartographyTableGui copy() {
-        CartographyTableGui gui = new CartographyTableGui(getTitleHolder());
+        CartographyTableGui gui = new CartographyTableGui(getTitleHolder(), super.plugin);
 
         gui.mapComponent = mapComponent.copy();
         gui.paperComponent = paperComponent.copy();
@@ -397,7 +397,7 @@ public class CartographyTableGui extends NamedGui implements InventoryBased {
                     throw new XMLLoadException("Unknown component name");
             }
 
-            component.load(instance, componentElement);
+            component.load(instance, componentElement, plugin);
         }
 
         return cartographyTableGui;

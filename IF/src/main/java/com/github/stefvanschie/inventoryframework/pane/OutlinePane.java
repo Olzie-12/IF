@@ -236,10 +236,9 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
                         int finalColumn = slot.getX(maxLength) + x + paneOffsetX;
 
                         GuiItem item = items[index];
-                        if (!item.isVisible()) {
-                            continue;
+                        if (item.isVisible()) {
+                            inventoryComponent.setItem(item, finalColumn, finalRow);
                         }
-                        inventoryComponent.setItem(item, finalColumn, finalRow);
                     }
                 }
 
@@ -571,7 +570,7 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
                 if (item.getNodeName().equals("empty"))
                     outlinePane.addItem(new GuiItem(new ItemStack(Material.AIR), plugin));
                 else
-                    outlinePane.addItem(Pane.loadItem(instance, (Element) item));
+                    outlinePane.addItem(Pane.loadItem(instance, (Element) item, plugin));
             }
 
             return outlinePane;

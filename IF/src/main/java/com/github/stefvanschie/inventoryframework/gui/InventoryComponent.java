@@ -7,6 +7,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -298,8 +300,23 @@ public class InventoryComponent {
      * @param instance the instance to apply field and method references on
      * @param element the element to load
      * @since 0.8.0
+     * @deprecated superseded by {@link #load(Object, Element, Plugin)}
      */
+    @Deprecated
     public void load(@NotNull Object instance, @NotNull Element element) {
+        load(instance, element, JavaPlugin.getProvidingPlugin(InventoryComponent.class));
+    }
+
+    /**
+     * Loads the provided element's child panes onto this component. If the element contains any child panes, this will
+     * mutate this component.
+     *
+     * @param instance the instance to apply field and method references on
+     * @param element the element to load
+     * @param plugin the plugin to load the panes with
+     * @since 0.10.12
+     */
+    public void load(@NotNull Object instance, @NotNull Element element, @NotNull Plugin plugin) {
         NodeList childNodes = element.getChildNodes();
 
         for (int innerIndex = 0; innerIndex < childNodes.getLength(); innerIndex++) {
@@ -309,7 +326,7 @@ public class InventoryComponent {
                 continue;
             }
 
-            addPane(Gui.loadPane(instance, innerItem));
+            addPane(Gui.loadPane(instance, innerItem, plugin));
         }
     }
 

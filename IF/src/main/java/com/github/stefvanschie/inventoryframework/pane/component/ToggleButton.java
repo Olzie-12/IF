@@ -60,14 +60,12 @@ public class ToggleButton extends Pane {
 
         this.enabled = enabled;
 
-        //TODO: don't know the positions of these panes, should be zero, though
-
-        this.enabledPane = new OutlinePane(this.x, this.y, length, height);
-        this.enabledPane.addItem(new GuiItem(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)));
+        this.enabledPane = new OutlinePane(length, height);
+        this.enabledPane.addItem(new GuiItem(new ItemStack(Material.GREEN_STAINED_GLASS_PANE), plugin));
         this.enabledPane.setRepeat(true);
 
-        this.disabledPane = new OutlinePane(this.x, this.y, length, height);
-        this.disabledPane.addItem(new GuiItem(new ItemStack(Material.RED_STAINED_GLASS_PANE)));
+        this.disabledPane = new OutlinePane(length, height);
+        this.disabledPane.addItem(new GuiItem(new ItemStack(Material.RED_STAINED_GLASS_PANE), plugin));
         this.disabledPane.setRepeat(true);
     }
 
@@ -290,10 +288,13 @@ public class ToggleButton extends Pane {
         int newMaxLength = Math.min(maxLength, length);
         int newMaxHeight = Math.min(maxHeight, height);
 
+        int newPaneOffsetX = this.slot.getX(newMaxLength) + paneOffsetX;
+        int newPaneOffsetY = this.slot.getY(newMaxHeight) + paneOffsetY;
+
         if (enabled) {
-            this.enabledPane.display(inventoryComponent, paneOffsetX, paneOffsetY, newMaxLength, newMaxHeight);
+            this.enabledPane.display(inventoryComponent, newPaneOffsetX, newPaneOffsetY, newMaxLength, newMaxHeight);
         } else {
-            this.disabledPane.display(inventoryComponent, paneOffsetX, paneOffsetY, newMaxLength, newMaxHeight);
+            this.disabledPane.display(inventoryComponent, newPaneOffsetX, newPaneOffsetY, newMaxLength, newMaxHeight);
         }
     }
 
@@ -327,8 +328,8 @@ public class ToggleButton extends Pane {
 
         callOnClick(event);
 
-        int newX = paneOffsetX + x;
-        int newY = paneOffsetY + y;
+        int newX = paneOffsetX + xPosition;
+        int newY = paneOffsetY + yPosition;
 
         /*
         Since we've toggled before, the click for the panes should be swapped around. If we haven't toggled due to
@@ -378,22 +379,6 @@ public class ToggleButton extends Pane {
 
         this.disabledPane.setHeight(height);
         this.enabledPane.setHeight(height);
-    }
-
-    @Override
-    public void setX(int x) {
-        super.setX(x);
-
-        this.disabledPane.setX(x);
-        this.enabledPane.setX(x);
-    }
-
-    @Override
-    public void setY(int y) {
-        super.setY(y);
-
-        this.disabledPane.setY(y);
-        this.enabledPane.setY(y);
     }
 
     /**

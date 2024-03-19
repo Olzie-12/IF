@@ -1,6 +1,6 @@
 # IF <a href="https://discord.gg/RXmy4HdR4x"><img align="right" src="https://img.shields.io/discord/780514939293925407" alt="Discord guild"></a>
 
-*This framework works for Minecraft versions 1.14-1.19*
+*This framework works for Minecraft versions 1.14-1.20*
 
 An inventory framework for managing GUIs
 
@@ -14,7 +14,7 @@ To add this project as a dependency to your pom.xml, add the following to your p
 <dependency>
     <groupId>com.github.stefvanschie.inventoryframework</groupId>
     <artifactId>IF</artifactId>
-    <version>0.10.8</version>
+    <version>0.10.13</version>
 </dependency>
 ```
 The project is in the Central Repository, so specifying a repository is not needed.
@@ -24,7 +24,7 @@ Now in order to shade the project into your project, add the following to your p
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-shade-plugin</artifactId>
-    <version>3.2.4</version>
+    <version>3.5.2</version>
     <configuration>
         <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
         <relocations>
@@ -50,7 +50,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    implementation 'com.github.stefvanschie.inventoryframework:IF:0.10.8'
+    implementation 'com.github.stefvanschie.inventoryframework:IF:0.10.13'
     // ...
 }
 ```
@@ -135,6 +135,10 @@ mvn paper-nms:init -pl nms/1_19_0
 mvn paper-nms:init -pl nms/1_19_1
 mvn paper-nms:init -pl nms/1_19_2
 mvn paper-nms:init -pl nms/1_19_3
+mvn paper-nms:init -pl nms/1_19_4
+mvn paper-nms:init -pl nms/1_20_0-1
+mvn paper-nms:init -pl nms/1_20_2
+mvn paper-nms:init -pl nms/1_20_3-4
 ```
 
 Your environment is now set up correctly. To create a build, run the following inside the root folder of the project.

@@ -351,29 +351,24 @@ public class GuiListener implements Listener {
         //due to a client issue off-hand items appear as ghost items, this updates the off-hand correctly client-side
         playerInventory.setItemInOffHand(playerInventory.getItemInOffHand());
 
-        if (!gui.isUpdating()) {//this is a hack to remove items correctly when players press the x button in a beacon
-            Bukkit.getScheduler().runTask(this.plugin, () -> {
-                gui.callOnClose(event);
+        if (!gui.isUpdating()) {
+            gui.callOnClose(event);
 
-                if (humanEntity.getOpenInventory().getTopInventory() instanceof PlayerInventory) {
-                    humanEntity.closeInventory();
-                }
-            });
+            event.getInventory().clear(); //clear inventory to prevent items being put back
 
-            //delay because merchants put items in slots back in the player inventory
-            Bukkit.getScheduler().runTask(this.plugin, () -> {
-                gui.getHumanEntityCache().restoreAndForget(humanEntity);
+            gui.getHumanEntityCache().restoreAndForget(humanEntity);
 
-                if (gui.getViewerCount() == 1) {
-                    activeGuiInstances.remove(gui);
-                }
+            if (gui.getViewerCount() == 1) {
+                activeGuiInstances.remove(gui);
+            }
 
-                if (gui instanceof AnvilGui) {
-                    ((AnvilGui) gui).handleClose(humanEntity);
-                } else if (gui instanceof MerchantGui) {
-                    ((MerchantGui) gui).handleClose(humanEntity);
-                }
-            });
+            if (gui instanceof AnvilGui) {
+                ((AnvilGui) gui).handleClose(humanEntity);
+            } else if (gui instanceof MerchantGui) {
+                ((MerchantGui) gui).handleClose(humanEntity);
+            } else if (gui instanceof ModernSmithingTableGui) {
+                ((ModernSmithingTableGui) gui).handleClose(humanEntity);
+            }
         }
     }
 

@@ -34,10 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a gui in the form of a smithing table
+ * Represents a gui in the form of a smithing table. This is the ;egacy variant with two input slots, available prior to
+ * Minecraft 1.20.
  *
  * @since 0.8.0
  */
+@Deprecated
 public class SmithingTableGui extends NamedGui implements InventoryBased {
 
     /**
@@ -407,7 +409,7 @@ public class SmithingTableGui extends NamedGui implements InventoryBased {
                     throw new XMLLoadException("Unknown component name");
             }
 
-            component.load(instance, componentElement);
+            component.load(instance, componentElement, plugin);
         }
 
         return smithingTableGui;
