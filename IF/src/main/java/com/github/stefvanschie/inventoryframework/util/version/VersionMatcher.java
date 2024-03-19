@@ -2,7 +2,6 @@ package com.github.stefvanschie.inventoryframework.util.version;
 
 import com.github.stefvanschie.inventoryframework.abstraction.*;
 import com.github.stefvanschie.inventoryframework.exception.UnsupportedVersionException;
-import com.github.stefvanschie.inventoryframework.nms.v1_19_4.LegacySmithingTableInventoryImpl;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
