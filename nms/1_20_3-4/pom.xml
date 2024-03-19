@@ -10,11 +10,6 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties>
-
     <artifactId>1_20_3-4</artifactId>
 
     <properties>
